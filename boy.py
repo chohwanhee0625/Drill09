@@ -109,7 +109,11 @@ class Run:
     @staticmethod
     def do(boy):  # boy의 애니메이션을 만들어줌
         boy.frame = (boy.frame + 1) % 8
-        boy.x += boy.dir*5
+        if boy.x <= 800 and boy.x >= 0:
+            boy.x += boy.dir*5
+        else:
+            if boy.x >= 800: boy.x -= 5
+            else: boy.x += 5
         print('Run do')
 
     @staticmethod
