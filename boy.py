@@ -55,7 +55,7 @@ class Idle:
     def do(boy):  # boy의 애니메이션을 만들어줌
         boy.frame = (boy.frame + 1) % 8
         if get_time() - boy.wait_time > 3.0:
-            boy.state_machine.handle_event('TIME_OUT', 0)
+            boy.state_machine.handle_event(('TIME_OUT', 0))
         print('Idle Do')
 
     @staticmethod
@@ -127,6 +127,7 @@ class AutoRun:
             boy.action = 1
         elif boy.action == 2:
             boy.action = 0
+        boy.wait_time = get_time()
         print('Run enter')
 
     @staticmethod
@@ -137,13 +138,16 @@ class AutoRun:
     def do(boy):  # boy의 애니메이션을 만들어줌, [0, 800] [0, 600]
         boy.frame = (boy.frame + 1) % 8
         if boy.action == 1:
-            boy.x += 5
+            boy.x += 10
             if boy.x > 800:
                 boy.action = 0
         elif boy.action == 0:
-            boy.x -= 5
+            boy.x -= 10
             if boy.x < 0:
                 boy.action = 1
+
+        if get_time() - boy.wait_time > 5:
+            boy.state_machine.handle_event(('TIME_OUT', 0))
         print('Run do')
 
     @staticmethod
